@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS reviews_photos;
 DROP TABLE IF EXISTS reviews;
 
 CREATE TABLE reviews (
-  id INTEGER NOT NULL UNIQUE,
+  id INT UNIQUE PRIMARY KEY NOT NULL,
   product_id INTEGER NOT NULL,
   rating INTEGER NOT NULL,
   date BIGINT NOT NULL,
@@ -19,34 +19,29 @@ CREATE TABLE reviews (
   reviewer_name VARCHAR(60) NULL DEFAULT NULL,
   reviewer_email VARCHAR(60) NULL DEFAULT NULL,
   response VARCHAR(1000) NULL DEFAULT NULL,
-  helpfulness INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (id)
+  helpfulness INTEGER NULL DEFAULT NULL
 );
 
 CREATE TABLE reviews_photos (
-  id INTEGER NOT NULL UNIQUE,
+  id INT UNIQUE PRIMARY KEY NOT NULL,
   review_id INTEGER NOT NULL,
   url VARCHAR(1024) NOT NULL,
-  PRIMARY KEY (id)
-  FOREIGN KEY (review_id) REFERENCES reviews(id)
+  CONSTRAINT fk_reviews_photos_reviews FOREIGN KEY (review_id) REFERENCES reviews(id)
 );
 
 CREATE TABLE characteristics (
-  id INTEGER NOT NULL,
+  id INT UNIQUE PRIMARY KEY NOT NULL,
   product_id INTEGER NOT NULL,
-  name VARCHAR(60) NOT NULL,
-  PRIMARY KEY (id)
-  FOREIGN KEY (product_id) REFERENCES reviews(product_id)
+  name VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE characteristics_reviews (
-  id INTEGER NOT NULL,
+  id INT UNIQUE PRIMARY KEY NOT NULL,
   characteristic_id INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   value DECIMAL NULL DEFAULT NULL,
-  PRIMARY KEY (id)
-  FOREIGN KEY (characteristic_id) REFERENCES reviews(product_id)
-  FOREIGN KEY (review_id) REFERENCES reviews(id)
+  CONSTRAINT fk_review FOREIGN KEY(review_id) REFERENCES reviews (id),
+  CONSTRAINT fk_characteristics FOREIGN KEY(characteristic_id) REFERENCES characteristics (id)
 );
 
 COPY reviews FROM '/Users/alexisstone/Desktop/reviewsdata/reviews.csv' DELIMITER ',' CSV HEADER;
