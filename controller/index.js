@@ -1,17 +1,13 @@
 const models = require('../models')
 
 module.exports = {
-  getTest: function (req, res) {
-    models.getTest((err, data) => {
-      if (err) {
-        res.status(404).send(err)
-      } else {
-        res.status(200).send(data)
-      }
-    })
-  },
   get: function (req, res) {
-    models.get(req.query, (err, data) => {
+    console.log(req.query)
+    let page = req.query.page || 1;
+    let count = req.query.count || 5;
+    let sort = req.query.sort || 'recommend';
+    let product_id = req.query.product_id;
+    models.get({ page, count, sort, product_id }, (err, data) => {
       if (err) {
         res.status(404).send(err)
       } else {
@@ -19,18 +15,17 @@ module.exports = {
       }
     })
   },
-  // getMeta: function (req, res) {
-  //   models.getMeta((err, data) => {
-  //     if (err) {
-  //       res.status(404).send(err)
-  //     } else {
-  //       res.status(200).send(data)
-  //     }
-  //   })
-  // },
+  getMeta: function (req, res) {
+    models.getMeta(req.query.id, (err, data) => {
+      if (err) {
+        res.status(404).send(err)
+      } else {
+        res.status(200).send(data)
+      }
+    })
+  },
   putHelpful: function (req, res) {
-
-    models.putHelpful(req.body.id, (err, data) => {
+    models.putHelpful(req.params.review_id, (err, data) => {
       if (err) {
         res.status(404).send(err)
       } else {
@@ -39,7 +34,7 @@ module.exports = {
     })
   },
   putReported: function (req, res) {
-    models.putReported(req.body.id, (err, data) => {
+    models.putReported(req.params.review_id, (err, data) => {
       if (err) {
         res.status(404).send(err)
       } else {
@@ -47,7 +42,13 @@ module.exports = {
       }
     })
   },
-  // post: function (req, res) {
-
-  // },
+  post: function (req, res) {
+    models.post(req.body, (err, data) => {
+      if (err) {
+        res.status(404).send(err)
+      } else {
+        res.status(200).send(data)
+      }
+    })
+  },
 }
