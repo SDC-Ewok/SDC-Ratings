@@ -29,7 +29,6 @@ CREATE TABLE reviews_photos (
   CONSTRAINT fk_reviews_photos_reviews FOREIGN KEY (review_id) REFERENCES reviews(id)
 );
 
-
 CREATE TABLE characteristics (
   id INT UNIQUE PRIMARY KEY NOT NULL,
   product_id INTEGER NOT NULL,
