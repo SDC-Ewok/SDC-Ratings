@@ -6,8 +6,8 @@ export let options = {
 };
 //Below randomize the endpoints
 export default function () {
-  //http.get(`http://localhost:3000/reviews/?product_id=${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`);
-  http.get(`http://localhost:3000/reviews/meta?id=${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`);
+  http.get(`http://localhost:3000/reviews/?product_id=${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`);
+  //http.get(`http://localhost:3000/reviews/meta?id=${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`);
 }
 
 // import http from 'k6/http';
